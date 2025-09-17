@@ -6,7 +6,7 @@ import ProjectCard from '../common/ProjectCard.jsx';    // 2. Importa o "molde"
 
 const ProjectsSection = () => {
   return (
-    <section className="bg-white py-12 md:py-20">
+    <section id="projetos" className="bg-white py-12 md:py-20">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-2xl font-bold text-[#3C4555] text-left mb-10">
           Meus projetos

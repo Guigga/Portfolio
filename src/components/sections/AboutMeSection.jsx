@@ -3,7 +3,7 @@ import React from 'react';
 
 const AboutMeSection = () => {
   return (
-    <section className="py-16">
+    <section id="sobre-mim" className="py-16">
       <h2 className="text-2xl font-bold text-[#3C4555] text-left mb-10">
         Sobre mim
       </h2>

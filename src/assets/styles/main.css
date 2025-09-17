@@ -1,4 +1,10 @@
 /* src/assets/styles/main.css */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 16px; 
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
