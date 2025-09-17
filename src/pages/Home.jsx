@@ -16,7 +16,6 @@ const Home = () => {
       <ExperienceSection />
       <EducationSection />
       <AboutMeSection />
-      <TestimonialsSection />
       <ContactSection />
     </>
   );

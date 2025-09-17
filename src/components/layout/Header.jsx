@@ -28,7 +28,7 @@ const Header = () => {
 
     return (
         <div className="relative p-4">
-            <header className="flex items-center justify-between w-full max-w-[1360px] mx-auto backdrop-blur-sm border border-[#E7E7E7] rounded-[20px] h-[60px] pl-5 shadow-sm">
+            <header className="flex items-center justify-between w-full mx-auto backdrop-blur-sm border border-[#E7E7E7] rounded-[20px] h-[60px] pl-5 shadow-sm">
                 
                 <div className="flex-shrink-0">
                     <RouterLink to="/">

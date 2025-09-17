@@ -12,10 +12,9 @@ const EducationSection = () => {
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         
         {educationData.map((item, index) => (
-          <article key={index} className="bg-white p-5 rounded-2xl border border-[#E7E7E7] flex flex-col items-start gap-4 shadow-sm">
+          <article key={index} className="bg-white p-5 rounded-2xl border border-[#ECECEC] flex flex-col items-start gap-4 shadow-sm bg-[#F4F4F4]">
             
-            {/* NOVO: Div do círculo para o ícone */}
-            <div className="w-[72px] h-[72px] rounded-full border border-[#7E848F] flex items-center justify-center p-2 bg-[#F9FAFB]">
+            <div className="w-[72px] h-[72px] rounded-full border border-[#ECECEC] flex items-center justify-center p-2 bg-[#F4F4F4]">
               {item.icon}
             </div>
 

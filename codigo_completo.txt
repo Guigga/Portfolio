@@ -53,10 +53,28 @@ export default {
     autoprefixer: {},
   },
 }
-// src/data/experiences.js
+// src/data/experiences.jsx
 import React from 'react';
-import { UiUxIcon, ProductDesignerIcon, WebDesignerIcon } from '../components/common/Icons.jsx';
+import muuLogo from '../assets/Muu.png';
 
+
+// --- Definindo os Ícones aqui dentro ---
+const UiUxIcon = () => (
+  <svg width="121" height="122" viewBox="0 0 121 122" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 mb-4 text-[#3ED1D2]">
+    <path d="M60.5016 30.9905C43.9542 30.9905 30.4933 44.4493 30.4933 60.994C30.4933 77.5387 43.9542 90.9975 60.5016 90.9975C77.049 90.9975 90.5099 77.5387 90.5099 60.994C90.5099 44.4493 77.049 30.9905 60.5016 30.9905ZM57.493 84.7997C46.0551 83.3735 37.0811 73.8564 36.5365 62.161L57.493 79.743V84.7997ZM57.493 71.9115L37.2627 54.9518C37.9111 52.4624 38.9745 50.1285 40.3232 48.002L57.4671 62.3944V71.9115H57.493ZM57.493 54.5629L44.1877 43.412C47.7669 40.0927 52.3835 37.8366 57.493 37.1883V54.5629ZM63.5102 37.1883C68.6197 37.8366 73.2104 40.0668 76.8155 43.412L63.5102 54.5629V37.1883ZM63.5102 62.3944L80.68 48.002C82.0547 50.1025 83.0921 52.4624 83.7405 54.9518L63.5102 71.9115V62.3944ZM63.5102 84.7997V79.743L84.4667 62.161C83.9221 73.8304 74.9481 83.3475 63.5102 84.7997Z" fill="currentColor"/>
+    <path d="M94.8966 85.2666C95.3894 85.5519 95.9081 85.7075 96.4528 85.7075C97.4643 85.7075 98.4499 85.1888 99.0205 84.2553C103.248 77.2536 105.505 69.2146 105.505 60.9941C105.505 36.1771 85.3261 16.0019 60.5051 16.0019C52.2833 16.0019 44.243 18.232 37.2402 22.4849C35.8137 23.3407 35.3728 25.1818 36.2287 26.6081C37.0846 28.0344 38.9261 28.4752 40.3526 27.6195C46.4217 23.9371 53.3985 22.0181 60.531 22.0181C82.0322 22.0181 99.5392 39.5223 99.5392 61.0201C99.5392 68.1514 97.594 75.1272 93.911 81.1953C93.0292 82.5697 93.496 84.4108 94.8966 85.2666Z" fill="currentColor"/>
+    <path d="M27.4108 34.9575C26.0362 34.024 24.1688 34.387 23.2351 35.7614C18.1775 43.2299 15.5061 51.9431 15.5061 60.9934C15.5061 85.8105 35.6845 105.986 60.5055 105.986C69.5573 105.986 78.2719 103.315 85.7415 98.2579C87.1162 97.3244 87.4793 95.4572 86.5456 94.0828C85.6119 92.7084 83.7444 92.3454 82.3698 93.2789C75.9117 97.6615 68.3383 99.9694 60.5055 99.9694C39.0043 99.9694 21.4973 82.4912 21.4973 60.9675C21.4973 53.136 23.8057 45.5638 28.1889 39.1067C29.1486 37.7582 28.7855 35.8911 27.4108 34.9575Z" fill="currentColor"/>
+    <path d="M16.1007 96.8581C17.4494 95.8727 17.7347 94.0056 16.775 92.6571C1.10949 71.0816 3.44375 41.7005 22.3254 22.8219C41.207 3.94328 70.5928 1.58346 92.1718 17.2724C93.5205 18.2578 95.3879 17.9466 96.3735 16.5982C97.3591 15.2497 97.0478 13.3826 95.6991 12.3972C84.2612 4.09888 70.1778 0.105328 56.0166 1.16855C41.6998 2.23176 28.2389 8.40361 18.0718 18.569C7.9048 28.7344 1.73196 42.1932 0.668573 56.5077C-0.394815 70.6667 3.59937 84.7478 11.899 96.1839C12.4955 96.9878 13.4033 97.4287 14.337 97.4287C14.9595 97.4287 15.5819 97.2471 16.1007 96.8581Z" fill="currentColor"/>
+    <path d="M109.108 25.8031C108.123 24.4546 106.255 24.1694 104.907 25.1289C103.558 26.1143 103.273 27.9814 104.232 29.3299C119.898 50.9054 117.564 80.2865 98.6819 99.1651C79.8003 118.044 50.4145 120.404 28.8355 104.715C27.4868 103.729 25.6194 104.04 24.6338 105.389C23.6482 106.737 23.9595 108.604 25.3082 109.59C35.5271 117.006 47.8987 121 60.5296 121C62.008 121 63.5123 120.948 64.9907 120.844C79.3075 119.781 92.7685 113.609 102.935 103.444C113.103 93.2785 119.275 79.8198 120.339 65.5052C121.376 51.3203 117.382 37.2132 109.108 25.8031Z" fill="currentColor"/>
+  </svg>
+);
+const WebDesignerIcon = () => (
+  <svg width="124" height="124" viewBox="0 0 124 124" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 mb-4 text-[#3C4555]">
+    <path d="M42 122H98M58 26H114C116.122 26 118.157 26.8429 119.657 28.3431C121.157 29.8434 122 31.8783 122 34V90C122 92.1217 121.157 94.1566 119.657 95.6568C118.157 97.1571 116.122 98 114 98H26C23.8783 98 21.8434 97.1571 20.3431 95.6568C18.8429 94.1566 18 92.1217 18 90V82H122M2 50H42M86 122H54L58 98H82L86 122ZM10 2H34C34 2 42 2 42 10V58C42 58 42 66 34 66H10C10 66 2 66 2 58V10C2 10 2 2 10 2Z" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+// --- Exportando o Array de Dados ---
 export const experiencesData = [
   {
     icon: <UiUxIcon />,
@@ -65,7 +83,7 @@ export const experiencesData = [
     period: 'abr de 2025 - atualmente',
   },
   {
-    icon: <ProductDesignerIcon />,
+    icon: <img src={muuLogo} alt="Logo Muu AgroTech" className="w-20 h-20 mb-4 object-contain rounded-full" />,
     title: 'Product Designer',
     company: 'Muu AgroTech - Estágio',
     period: 'abr de 2023 - out de 2024',
@@ -75,6 +93,56 @@ export const experiencesData = [
     title: 'Web Designer',
     company: 'Lisboa - Freelance',
     period: 'ago de 2022 - mar de 2023',
+  },
+];// src/data/education.jsx
+import React from 'react';
+
+// --- Ícones como Componentes ---
+const GoogleIcon = () => (
+    <svg width="60" height="60" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* ... código svg ... */}
+    </svg>
+);
+
+const FatecIcon = () => (
+    <svg width="47" height="64" viewBox="0 0 61 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* ... código svg ... */}
+    </svg>
+);
+
+const UfabcIcon = () => (
+    <svg width="60" height="56" viewBox="0 0 83 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* ... código svg ... */}
+    </svg>
+);
+
+
+// --- Exportando o Array de Dados ---
+export const educationData = [
+  {
+    icon: <GoogleIcon />,
+    institution: 'Coursera',
+    course: 'Google UX Design',
+    date: 'set de 2025 - atualmente',
+  },
+  {
+    icon: <FatecIcon />,
+    institution: 'FATEC São Paulo',
+    course: 'Análise e Desenvolvimento de Sistemas',
+    date: 'jan de 2025 - dez de 2024',
+  },
+  {
+    icon: <UfabcIcon />,
+    institution: 'UFABC',
+    course: 'Bacharel em Ciências e Tecnologia',
+    date: 'mai de 2017 - dez de 2024',
+  },
+  // Adicionei o "Eu Capacito" aqui, pois parece ser um curso
+  {
+    icon: <GoogleIcon />, // Usando o GoogleIcon como placeholder
+    institution: 'Eu Capacito',
+    course: 'User Experiênce (UX)',
+    date: 'dez de 2024',
   },
 ];// src/data/projects.js
 import componentorImage from '../assets/Componentor Image.png';
@@ -134,52 +202,7 @@ function App() {
   return <RouterProvider router={router} />;
 }
 
-export default App;// src/components/common/Icons.jsx
-
-import React from 'react';
-
-export const UiUxIcon = () => (
-  <svg width="121" height="122" viewBox="0 0 121 122" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 mb-4 text-[#3ED1D2]">
-    {/* ...caminhos svg... */}
-  </svg>
-);
-
-export const ProductDesignerIcon = () => (
-  <div className="w-20 h-20 mb-4 bg-[#004D61] flex items-center justify-center">
-    <svg width="68" height="34" viewBox="0 0 68 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* ...caminhos svg... */}
-    </svg>
-  </div>
-);
-
-export const WebDesignerIcon = () => (
-  <svg width="124" height="124" viewBox="0 0 124 124" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 mb-4 text-[#3C4555]">
-    <path d="M42 122H98M58 26H114C116.122 26 118.157 26.8429 119.657 28.3431C121.157 29.8434 122 31.8783 122 34V90C122 92.1217 121.157 94.1566 119.657 95.6568C118.157 97.1571 116.122 98 114 98H26C23.8783 98 21.8434 97.1571 20.3431 95.6568C18.8429 94.1566 18 92.1217 18 90V82H122M2 50H42M86 122H54L58 98H82L86 122ZM10 2H34C34 2 42 2 42 10V58C42 58 42 66 34 66H10C10 66 2 66 2 58V10C2 10 2 2 10 2Z" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);// src/components/common/ExperienceCard.jsx
-import React from 'react';
-
-// Renomeando de 'Item' para 'Card' para manter o padrão
-const ExperienceCard = ({ icon, title, company, period }) => (
-  <div className="flex flex-col items-center text-center">
-    {icon}
-    <div className="flex flex-col items-center gap-2">
-      <h3 className="text-xl font-semibold text-[#3C4555]">{title}</h3>
-      <div className="flex flex-col items-center gap-1">
-        <p className="text-base text-[#3C4555]">{company}</p>
-        {period.includes('atualmente') ? (
-          <p className="text-base text-[#3C4555]">
-            {period.split('atualmente')[0]}<span className="italic">atualmente</span>
-          </p>
-        ) : (
-          <p className="text-base text-[#3C4555]">{period}</p>
-        )}
-      </div>
-    </div>
-  </div>
-);
-
-export default ExperienceCard;// src/components/common/ProjectCard.jsx
+export default App;// src/components/common/ProjectCard.jsx
 
 import React from 'react';
 
@@ -230,18 +253,14 @@ import ProjectCard from '../common/ProjectCard.jsx';    // 2. Importa o "molde"
 
 const ProjectsSection = () => {
   return (
-    <section id="projetos" className="bg-white py-12 md:py-20">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-2xl font-bold text-[#3C4555] text-left mb-10">
-          Meus projetos
-        </h2>
-        
-        {/* 3. Mapeia os dados e cria um card para cada projeto */}
-        <div className="space-y-16">
-          {projectsData.map(project => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
+    <section id="projetos" className="py-12 md:py-20">
+      <h2 className="text-2xl font-bold text-[#3C4555] text-left mb-10">
+        Meus projetos
+      </h2>      
+      <div className="space-y-16">
+        {projectsData.map(project => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
       </div>
     </section>
   );
@@ -250,6 +269,7 @@ const ProjectsSection = () => {
 export default ProjectsSection;// src/components/sections/HeroSection.jsx
 
 import React from 'react';
+import profilePhoto from '../../assets/Photo Profile.png';
 
 // Renomeamos o componente para seguir nosso padrão
 const HeroSection = () => {
@@ -304,7 +324,7 @@ const HeroSection = () => {
       {/* Imagem do Perfil */}
       <div className="flex-shrink-0">
         <img
-          src="src/assets/Photo Profile.png"
+          src={profilePhoto}
           alt="Foto do Product Designer"
           className="w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full object-cover"
         />
@@ -364,9 +384,29 @@ const TestimonialsSection = () => {
 
 export default TestimonialsSection;// src/components/sections/ExperienceSection.jsx
 import React from 'react';
-import { experiencesData } from '../../data/experiences.js';
-import ExperienceCard from '../common/ExperienceCard.jsx';
+import { experiencesData } from '../../data/experiences.jsx';
 
+// --- Card de Experiência (definido aqui dentro para simplificar) ---
+const ExperienceCard = ({ icon, title, company, period }) => (
+  <div className="flex flex-col items-start text-center">
+    {icon}
+    <div className="flex flex-col items-start gap-2">
+      <h3 className="text-xl font-semibold text-[#3C4555]">{title}</h3>
+      <div className="flex flex-col items-start gap-1">
+        <p className="text-base text-[#3C4555]">{company}</p>
+        {period.includes('atualmente') ? (
+          <p className="text-base text-[#3C4555]">
+            {period.split('atualmente')[0]}<span className="italic">atualmente</span>
+          </p>
+        ) : (
+          <p className="text-base text-[#3C4555]">{period}</p>
+        )}
+      </div>
+    </div>
+  </div>
+);
+
+// --- Seção Principal ---
 const ExperienceSection = () => {
   return (
     <section id="experiencia" className="py-16">
@@ -374,8 +414,7 @@ const ExperienceSection = () => {
         Experiência Profissional
       </h2>
       
-      {/* Container que organiza os cards */}
-      <div className="flex flex-col md:flex-row justify-center items-start gap-12 md:gap-20">
+      <div className="flex flex-col md:flex-row justify-start items-start gap-12 md:gap-20">
         {experiencesData.map((exp, index) => (
           <ExperienceCard
             key={index}
@@ -392,6 +431,7 @@ const ExperienceSection = () => {
 
 export default ExperienceSection;// src/components/sections/EducationSection.jsx
 import React from 'react';
+import { educationData } from '../../data/education.jsx';
 
 const EducationSection = () => {
   return (
@@ -399,8 +439,27 @@ const EducationSection = () => {
       <h2 className="text-2xl font-bold text-[#3C4555] text-left mb-10">
         Educação
       </h2>
-      <div className="p-10 bg-gray-100 rounded-lg">
-        <p className="text-gray-500">Conteúdo sobre sua formação acadêmica virá aqui...</p>
+      
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        {educationData.map((item, index) => (
+          <article key={index} className="bg-white p-5 rounded-2xl border border-[#E7E7E7] flex flex-col items-start gap-4 shadow-sm">
+            
+            {/* NOVO: Div do círculo para o ícone */}
+            <div className="w-[72px] h-[72px] rounded-full border border-[#7E848F] flex items-center justify-center p-2 bg-[#F9FAFB]">
+              {item.icon}
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <h3 className="font-semibold text-[20px] text-[#3C4555]">{item.institution}</h3>
+              <div className="flex flex-col gap-1">
+                <p className="font-normal text-[15px] text-[#3C4555]">{item.course}</p>
+                <p className="font-light text-[15px] text-[#3C4555]">{item.date}</p>
+              </div>
+            </div>
+          </article>
+        ))}
+
       </div>
     </section>
   );
