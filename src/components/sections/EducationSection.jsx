@@ -14,7 +14,7 @@ const EducationSection = () => {
         {educationData.map((item, index) => (
           <article key={index} className="bg-white p-5 rounded-2xl border border-[#ECECEC] flex flex-col items-start gap-4 shadow-sm bg-[#F4F4F4]">
             
-            <div className="w-[72px] h-[72px] rounded-full border border-[#ECECEC] flex items-center justify-center p-2 bg-[#F4F4F4]">
+            <div className="w-[72px] h-[72px] rounded-full border border-[#ECECEC] flex items-center justify-center p-2 bg-[#FAFAFA]">
               {item.icon}
             </div>
 
