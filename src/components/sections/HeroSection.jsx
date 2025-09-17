@@ -1,6 +1,7 @@
 // src/components/sections/HeroSection.jsx
 
 import React from 'react';
+import profilePhoto from '../../assets/Photo Profile.png';
 
 // Renomeamos o componente para seguir nosso padrão
 const HeroSection = () => {
@@ -55,7 +56,7 @@ const HeroSection = () => {
       {/* Imagem do Perfil */}
       <div className="flex-shrink-0">
         <img
-          src="src/assets/Photo Profile.png"
+          src={profilePhoto}
           alt="Foto do Product Designer"
           className="w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full object-cover"
         />

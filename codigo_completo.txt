@@ -1,4 +1,591 @@
-{
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import { defineConfig, globalIgnores } from 'eslint/config'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{js,jsx}'],
+    extends: [
+      js.configs.recommended,
+      reactHooks.configs['recommended-latest'],
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        ecmaFeatures: { jsx: true },
+        sourceType: 'module',
+      },
+    },
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+    },
+  },
+])
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+})
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+// src/data/experiences.js
+import React from 'react';
+import { UiUxIcon, ProductDesignerIcon, WebDesignerIcon } from '../components/common/Icons.jsx';
+
+export const experiencesData = [
+  {
+    icon: <UiUxIcon />,
+    title: 'UI UX Designer',
+    company: 'Namu - Júnior',
+    period: 'abr de 2025 - atualmente',
+  },
+  {
+    icon: <ProductDesignerIcon />,
+    title: 'Product Designer',
+    company: 'Muu AgroTech - Estágio',
+    period: 'abr de 2023 - out de 2024',
+  },
+  {
+    icon: <WebDesignerIcon />,
+    title: 'Web Designer',
+    company: 'Lisboa - Freelance',
+    period: 'ago de 2022 - mar de 2023',
+  },
+];// src/data/projects.js
+import componentorImage from '../assets/Componentor Image.png';
+// Importe a imagem do seu próximo projeto aqui
+// import proximoProjetoImage from '../assets/proximo-projeto.png';
+
+export const projectsData = [
+  {
+    id: 1,
+    tag: 'Figma plugin',
+    title: 'Componentor',
+    description: 'Criação e implementação de plugin para aumento de produtividade e otimização do handoff.',
+    imageSrc: componentorImage,
+    link: '#',
+    bgColor: '#4894C4',
+    layout: 'image-right'
+  },
+  
+];// src/App.jsx
+
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import Header from "./components/layout/Header.jsx";
+import Home from './pages/Home.jsx';
+
+const Layout = () => {
+  return (
+    <>
+      {/* Adicionando padding horizontal de 40px (px-10) ao Header */}
+      <div className="relative px-10 sticky top-0 z-50">
+        <Header />
+      </div>
+      
+      {/* Adicionando padding horizontal de 80px (px-20) ao conteúdo principal */}
+      <main className="px-20">
+        <Outlet />
+      </main>
+    </>
+  );
+};
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />, // O Layout é aplicado a todas as rotas
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+    ],
+  },
+]);
+
+// O componente App principal que apenas renderiza o nosso roteador
+function App() {
+  return <RouterProvider router={router} />;
+}
+
+export default App;// src/components/common/Icons.jsx
+
+import React from 'react';
+
+export const UiUxIcon = () => (
+  <svg width="121" height="122" viewBox="0 0 121 122" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 mb-4 text-[#3ED1D2]">
+    {/* ...caminhos svg... */}
+  </svg>
+);
+
+export const ProductDesignerIcon = () => (
+  <div className="w-20 h-20 mb-4 bg-[#004D61] flex items-center justify-center">
+    <svg width="68" height="34" viewBox="0 0 68 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* ...caminhos svg... */}
+    </svg>
+  </div>
+);
+
+export const WebDesignerIcon = () => (
+  <svg width="124" height="124" viewBox="0 0 124 124" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 mb-4 text-[#3C4555]">
+    <path d="M42 122H98M58 26H114C116.122 26 118.157 26.8429 119.657 28.3431C121.157 29.8434 122 31.8783 122 34V90C122 92.1217 121.157 94.1566 119.657 95.6568C118.157 97.1571 116.122 98 114 98H26C23.8783 98 21.8434 97.1571 20.3431 95.6568C18.8429 94.1566 18 92.1217 18 90V82H122M2 50H42M86 122H54L58 98H82L86 122ZM10 2H34C34 2 42 2 42 10V58C42 58 42 66 34 66H10C10 66 2 66 2 58V10C2 10 2 2 10 2Z" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);// src/components/common/ExperienceCard.jsx
+import React from 'react';
+
+// Renomeando de 'Item' para 'Card' para manter o padrão
+const ExperienceCard = ({ icon, title, company, period }) => (
+  <div className="flex flex-col items-center text-center">
+    {icon}
+    <div className="flex flex-col items-center gap-2">
+      <h3 className="text-xl font-semibold text-[#3C4555]">{title}</h3>
+      <div className="flex flex-col items-center gap-1">
+        <p className="text-base text-[#3C4555]">{company}</p>
+        {period.includes('atualmente') ? (
+          <p className="text-base text-[#3C4555]">
+            {period.split('atualmente')[0]}<span className="italic">atualmente</span>
+          </p>
+        ) : (
+          <p className="text-base text-[#3C4555]">{period}</p>
+        )}
+      </div>
+    </div>
+  </div>
+);
+
+export default ExperienceCard;// src/components/common/ProjectCard.jsx
+
+import React from 'react';
+
+const ProjectCard = ({ project }) => {
+  return (
+    <div className="rounded-2xl shadow-xl overflow-hidden" style={{ backgroundColor: project.bgColor }}>
+      <div 
+        className={`flex flex-col items-end gap-10 lg:gap-0 
+                    ${project.layout === 'image-left' ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
+
+        <div className="w-full lg:w-1/2 flex flex-col space-y-8 text-white text-center lg:text-left p-8 md:p-12 lg:p-20">
+          <div>
+
+            <p className="text-xl italic">{project.tag}</p>
+            <h3 className="text-4xl md:text-5xl font-medium mt-2">{project.title}</h3>
+            <p className="text-xl mt-4 leading-relaxed max-w-md mx-auto lg:mx-0">{project.description}</p>
+          </div>
+          <div className="mt-auto pt-8">
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-[#FAFAFA] text-[#27527B] font-semibold text-lg md:text-xl px-12 py-4 rounded-2xl border border-[#27527B] transition-transform duration-300 hover:scale-105 shadow-md"
+            >
+              Acesse o projeto
+            </a>
+          </div>
+        </div>
+
+        {/* 3. O bloco da imagem NÃO tem padding, ficando colado nas bordas */}
+        <div className="w-full lg:w-1/2 h-full">
+          <img
+            src={project.imageSrc}
+            alt={`Demonstração do projeto ${project.title}`}
+            className="rounded-b-2xl lg:rounded-none w-full h-full object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProjectCard;// src/components/sections/ProjectsSection.jsx
+
+import React from 'react';
+import { projectsData } from '../../data/projects.js'; // 1. Importa os dados
+import ProjectCard from '../common/ProjectCard.jsx';    // 2. Importa o "molde"
+
+const ProjectsSection = () => {
+  return (
+    <section id="projetos" className="bg-white py-12 md:py-20">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-2xl font-bold text-[#3C4555] text-left mb-10">
+          Meus projetos
+        </h2>
+        
+        {/* 3. Mapeia os dados e cria um card para cada projeto */}
+        <div className="space-y-16">
+          {projectsData.map(project => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ProjectsSection;// src/components/sections/HeroSection.jsx
+
+import React from 'react';
+
+// Renomeamos o componente para seguir nosso padrão
+const HeroSection = () => {
+  return (
+    // Container principal: define o layout flexível e responsivo
+    // Removi o container que centralizava, pois nosso layout principal fará isso.
+    <section className="flex flex-col-reverse md:flex-row items-center justify-between gap-12 lg:gap-24 py-10">
+      
+      {/* Bloco de conteúdo de texto */}
+      <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-2xl">
+        
+        {/* Título Principal */}
+        <h1 className="text-4xl md:text-5xl font-bold text-[#3C4555] leading-tight">
+          Product Designer - UI UX
+        </h1>
+        
+        {/* Textos de descrição */}
+        <div className="mt-6 space-y-2">
+          <p className="text-xl md:text-2xl text-[#5B6270]">
+            Apaixonado por tecnologia e inovação
+          </p>
+          <p className="text-xl md:text-2xl text-[#5B6270]">
+            Curioso em tudo que possa agregar a experiência do usuário
+          </p>
+          <p className="text-xl md:text-2xl text-[#5B6270]">
+            Satisfação em transformar ideias em um produto de qualidade
+          </p>
+        </div>
+        
+        {/* Botão Currículo com efeitos de hover */}
+        <a 
+          href="https://drive.google.com/file/d/1F4MWbtUEIuzSqj30wrq1p3JYGp1HS0Px/view" 
+          id="botao-curriculo"
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="group mt-10 inline-flex items-center justify-center gap-3 bg-[#27527B] border border-[#27527B] rounded-[20px] px-12 py-4 transition-all duration-200 ease-in-out hover:bg-[#FAFAFA] hover:shadow-[3px_5px_0px_#27527B] hover:-translate-x-1 hover:-translate-y-1.5 active:translate-x-0 active:translate-y-0 active:shadow-none"
+        >
+          {/* Ícone SVG do Currículo */}
+          <svg width="16" height="19" viewBox="0 0 16 19" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-colors duration-200">
+            <path d="M0 1.9C0 1.39609 0.210714 0.912816 0.585786 0.556497C0.960859 0.200178 1.46957 0 2 0H10C10.2652 5.38055e-05 10.5195 0.100178 10.707 0.27835L15.707 5.02835C15.8946 5.20647 15.9999 5.44806 16 5.7V17.1C16 17.6039 15.7893 18.0872 15.4142 18.4435C15.0391 18.7998 14.5304 19 14 19H2C1.46957 19 0.960859 18.7998 0.585786 18.4435C0.210714 18.0872 0 17.6039 0 17.1V1.9ZM13.586 5.7L10 2.2933V5.7H13.586ZM8 1.9H2V17.1H14V7.6H9C8.73478 7.6 8.48043 7.49991 8.29289 7.32175C8.10536 7.14359 8 6.90196 8 6.65V1.9ZM4 10.45C4 10.198 4.10536 9.95641 4.29289 9.77825C4.48043 9.60009 4.73478 9.5 5 9.5H11C11.2652 9.5 11.5196 9.60009 11.7071 9.77825C11.8946 9.95641 12 10.198 12 10.45C12 10.702 11.8946 10.9436 11.7071 11.1218C11.5196 11.2999 11.2652 11.4 11 11.4H5C4.73478 11.4 4.48043 11.2999 4.29289 11.1218C4.10536 10.9436 4 10.702 4 10.45ZM4 14.25C4 13.998 4.10536 13.7564 4.29289 13.5782C4.48043 13.4001 4.73478 13.3 5 13.3H11C11.2652 13.3 11.5196 13.4001 11.7071 13.5782C11.8946 13.7564 12 13.998 12 14.25C12 14.502 11.8946 14.7436 11.7071 14.9218C11.5196 15.0999 11.2652 15.2 11 15.2H5C4.73478 15.2 4.48043 15.0999 4.29289 14.9218C4.10536 14.7436 4 14.502 4 14.25Z" 
+            className="fill-[#FAFAFA] group-hover:fill-[#27527B] transition-colors duration-200"
+          />
+        </svg>
+        
+        {/* Texto do Botão */}
+        <span className="text-xl font-semibold text-[#FAFAFA] group-hover:text-[#27527B] transition-colors duration-200">
+          Currículo
+        </span>
+      </a>
+    </div>
+      
+      {/* Imagem do Perfil */}
+      <div className="flex-shrink-0">
+        <img
+          src="src/assets/Photo Profile.png"
+          alt="Foto do Product Designer"
+          className="w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full object-cover"
+        />
+      </div>
+
+    </section>
+  );
+};
+
+export default HeroSection;// src/components/sections/ContactSection.jsx
+import React from 'react';
+
+const ContactSection = () => {
+  return (
+    <section id="contato" className="py-16">
+      <h2 className="text-2xl font-bold text-[#3C4555] text-left mb-10">
+        Me contate
+      </h2>
+      <div className="p-10 bg-gray-100 rounded-lg">
+        <p className="text-gray-500">O formulário de contato será construído aqui...</p>
+      </div>
+    </section>
+  );
+};
+
+export default ContactSection;// src/components/sections/AboutMeSection.jsx
+import React from 'react';
+
+const AboutMeSection = () => {
+  return (
+    <section id="sobre-mim" className="py-16">
+      <h2 className="text-2xl font-bold text-[#3C4555] text-left mb-10">
+        Sobre mim
+      </h2>
+      <div className="p-10 bg-gray-100 rounded-lg">
+        <p className="text-gray-500">Um parágrafo ou dois sobre quem você é, suas paixões, etc...</p>
+      </div>
+    </section>
+  );
+};
+
+export default AboutMeSection;// src/components/sections/TestimonialsSection.jsx
+import React from 'react';
+
+const TestimonialsSection = () => {
+  return (
+    <section className="py-16">
+      <h2 className="text-2xl font-bold text-[#3C4555] text-left mb-10">
+        O que dizem sobre mim
+      </h2>
+      <div className="p-10 bg-gray-100 rounded-lg">
+        <p className="text-gray-500">Depoimentos de colegas de trabalho ou clientes virão aqui...</p>
+      </div>
+    </section>
+  );
+};
+
+export default TestimonialsSection;// src/components/sections/ExperienceSection.jsx
+import React from 'react';
+import { experiencesData } from '../../data/experiences.js';
+import ExperienceCard from '../common/ExperienceCard.jsx';
+
+const ExperienceSection = () => {
+  return (
+    <section id="experiencia" className="py-16">
+      <h2 className="text-2xl font-bold text-[#3C4555] text-left mb-10">
+        Experiência Profissional
+      </h2>
+      
+      {/* Container que organiza os cards */}
+      <div className="flex flex-col md:flex-row justify-center items-start gap-12 md:gap-20">
+        {experiencesData.map((exp, index) => (
+          <ExperienceCard
+            key={index}
+            icon={exp.icon}
+            title={exp.title}
+            company={exp.company}
+            period={exp.period}
+          />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default ExperienceSection;// src/components/sections/EducationSection.jsx
+import React from 'react';
+
+const EducationSection = () => {
+  return (
+    <section id="educacao" className="py-16">
+      <h2 className="text-2xl font-bold text-[#3C4555] text-left mb-10">
+        Educação
+      </h2>
+      <div className="p-10 bg-gray-100 rounded-lg">
+        <p className="text-gray-500">Conteúdo sobre sua formação acadêmica virá aqui...</p>
+      </div>
+    </section>
+  );
+};
+
+export default EducationSection;// src/components/layout/Header.jsx
+
+import React, { useState } from 'react';
+// Renomeamos o Link do Router para não conflitar com a tag <a>
+import { Link as RouterLink } from 'react-router-dom';
+import logoSvg from '../../assets/logo.svg';
+
+const Header = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    // 1. ATUALIZAMOS OS DESTINOS (href) para serem âncoras (#)
+    const allLinks = [
+        { name: 'Projetos', href: '#projetos', showOnDesktop: true },
+        { name: 'Experiência', href: '#experiencia', showOnDesktop: true },
+        { name: 'Educação', href: '#educacao', showOnDesktop: true },
+        { name: 'Sobre mim', href: '#sobre-mim', showOnDesktop: true },
+        { name: 'Contato', href: '#contato', showOnDesktop: true },
+        { name: 'IArts', href: '/iarts', showOnDesktop: false, isSeparator: true },
+        { name: 'Música', href: '/musica', showOnDesktop: false },
+    ];
+
+    const socialLinks = [
+      { name: 'Figma', href: 'https://www.figma.com/@e110b1fc_9e93_4', svg: <svg width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.27597 16.7241C0.27597 14.9149 1.74269 13.4482 3.55195 13.4482H6.82792V16.7241C6.82792 18.5333 5.3612 20 3.55195 20C1.74269 20 0.27597 18.5333 0.27597 16.7241Z" fill="#24CB71"></path><path d="M6.82745 0V6.55175H10.2759C12.1803 6.55175 13.7242 5.08508 13.7242 3.27588C13.7242 1.46667 12.1803 0 10.2759 0H6.82745Z" fill="#FF7237"></path><path d="M10.2759 13.4483C12.1803 13.4483 13.7242 11.9045 13.7242 10C13.7242 8.0956 12.1803 6.55175 10.2759 6.55175C8.37135 6.55175 6.82745 8.0956 6.82745 10C6.82745 11.9045 8.37135 13.4483 10.2759 13.4483Z" fill="#00B6FF"></path><path d="M0.27597 3.27588C0.27597 5.08508 1.74269 6.55175 3.55195 6.55175H6.82745V0H3.55195C1.74269 0 0.27597 1.46667 0.27597 3.27588Z" fill="#FF3737"></path><path d="M0.27597 10C0.27597 11.9045 1.74269 13.4482 3.55195 13.4482H6.82792L6.82745 6.55175H3.55195C1.74269 6.55175 0.27597 8.09562 0.27597 10Z" fill="#874FFF"></path></svg>, bgColor: 'bg-[#1E1E1E]' },
+      { name: 'LinkedIn', href: 'https://www.linkedin.com/in/gcarmo/', svg: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.4375 0H1.5625C0.699219 0 0 0.699219 0 1.5625V18.4375C0 19.3008 0.699219 20 1.5625 20H18.4375C19.3008 20 20 19.3008 20 18.4375V1.5625C20 0.699219 19.3008 0 18.4375 0ZM7.20312 14.1836H5.25391V7.94531H7.20312V14.1836ZM6.17578 7.16406H6.16016C5.45312 7.16406 4.99609 6.6875 4.99609 6.08203C4.99609 5.46484 5.46875 5 6.1875 5C6.90625 5 7.34766 5.46484 7.36328 6.08203C7.36719 6.68359 6.91016 7.16406 6.17578 7.16406ZM15 14.1836H12.7891V10.957C12.7891 10.1133 12.4453 9.53516 11.6836 9.53516C11.1016 9.53516 10.7773 9.92578 10.6289 10.3008C10.5742 10.4336 10.582 10.6211 10.582 10.8125V14.1836H8.39062C8.39062 14.1836 8.41797 8.46484 8.39062 7.94531H10.582V8.92578C10.7109 8.49609 11.4102 7.88672 12.5273 7.88672C13.9141 7.88672 15 8.78516 15 10.7148V14.1836Z" fill="white"/></svg>, bgColor: 'bg-[#0077B5]' },
+      { name: 'WhatsApp', href: 'https://wa.me/5511978478468', svg: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.05 2.91002C16.1331 1.98413 15.0411 1.24999 13.8376 0.750386C12.634 0.250782 11.3431 -0.00429369 10.04 2.33776e-05C4.58005 2.33776e-05 0.130049 4.45002 0.130049 9.91002C0.130049 11.66 0.590049 13.36 1.45005 14.86L0.0500488 20L5.30005 18.62C6.75005 19.41 8.38005 19.83 10.04 19.83C15.5 19.83 19.9501 15.38 19.9501 9.92002C19.9501 7.27002 18.92 4.78002 17.05 2.91002ZM10.04 18.15C8.56005 18.15 7.11005 17.75 5.84005 17L5.54005 16.82L2.42005 17.64L3.25005 14.6L3.05005 14.29C2.2276 12.9771 1.79097 11.4593 1.79005 9.91002C1.79005 5.37002 5.49005 1.67002 10.03 1.67002C12.23 1.67002 14.3 2.53002 15.85 4.09002C16.6177 4.85389 17.226 5.76257 17.6397 6.76335C18.0534 7.76414 18.2642 8.83711 18.26 9.92002C18.28 14.46 14.58 18.15 10.04 18.15ZM14.56 11.99C14.31 11.87 13.09 11.27 12.87 11.18C12.64 11.1 12.48 11.06 12.31 11.3C12.14 11.55 11.67 12.11 11.53 12.27C11.39 12.44 11.24 12.46 10.99 12.33C10.74 12.21 9.94005 11.94 9.00005 11.1C8.26005 10.44 7.77005 9.63002 7.62005 9.38002C7.48005 9.13002 7.60005 9.00002 7.73005 8.87002C7.84005 8.76002 7.98005 8.58002 8.10005 8.44002C8.22005 8.30002 8.27005 8.19002 8.35005 8.03002C8.43005 7.86002 8.39005 7.72002 8.33005 7.60002C8.27005 7.48002 7.77005 6.26002 7.57005 5.76002C7.37005 5.28002 7.16005 5.34002 7.01005 5.33002H6.53005C6.36005 5.33002 6.10005 5.39002 5.87005 5.64002C5.65005 5.89002 5.01005 6.49002 5.01005 7.71002C5.01005 8.93002 5.90005 10.11 6.02005 10.27C6.14005 10.44 7.77005 12.94 10.25 14.01C10.84 14.27 11.3 14.42 11.66 14.53C12.25 14.72 12.79 14.69 13.22 14.63C13.7 14.56 14.69 14.03 14.89 13.45C15.1 12.87 15.1 12.38 15.03 12.27C14.96 12.16 14.81 12.11 14.56 11.99Z" fill="#FAFAFA"/></svg>, bgColor: 'bg-[#25D366]' },
+      { name: 'GitHub', href: 'https://github.com/Guigga', svg: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M10.0083 0C4.47396 0 0 4.4661 0 9.99127C0 14.4078 2.86662 18.1464 6.84338 19.4695C7.34058 19.569 7.5227 19.2546 7.5227 18.9901C7.5227 18.7584 7.50631 17.9645 7.50631 17.1372C4.72225 17.7328 4.14249 15.9462 4.14249 15.9462C3.69508 14.7883 3.03215 14.4907 3.03215 14.4907C2.12092 13.8786 3.09852 13.8786 3.09852 13.8786C4.1093 13.9448 4.63969 14.9042 4.63969 14.9042C5.53432 16.4259 6.97592 15.9959 7.55588 15.7312C7.63865 15.0861 7.90394 14.6395 8.18563 14.3914C5.96514 14.1598 3.62891 13.2996 3.62891 9.46183C3.62891 8.37008 4.02634 7.47686 4.65608 6.78218C4.55672 6.5341 4.20866 5.50832 4.75564 4.1354C4.75564 4.1354 5.60069 3.87069 7.5061 5.16098C8.32188 4.94228 9.16317 4.83102 10.0083 4.83008C10.8533 4.83008 11.7148 4.946 12.5102 5.16098C14.4159 3.87069 15.2609 4.1354 15.2609 4.1354C15.8079 5.50832 15.4596 6.5341 15.3603 6.78218C16.0066 7.47686 16.3876 8.37008 16.3876 9.46183C16.3876 13.2996 14.0514 14.1431 11.8143 14.3914C12.179 14.7056 12.4936 15.3011 12.4936 16.244C12.4936 17.5838 12.4773 18.6592 12.4773 18.9898C12.4773 19.2546 12.6596 19.569 13.1566 19.4697C17.1333 18.1462 20 14.4078 20 9.99127C20.0163 4.4661 15.526 0 10.0083 0Z" fill="white"/></svg>, bgColor: 'bg-[#24292F]' },
+    ];
+
+    return (
+        <div className="relative p-4">
+            <header className="flex items-center justify-between w-full max-w-[1360px] mx-auto backdrop-blur-sm border border-[#E7E7E7] rounded-[20px] h-[60px] pl-5 shadow-sm">
+                
+                <div className="flex-shrink-0">
+                    <RouterLink to="/">
+                        <img src={logoSvg} alt="Logo Guilherme Carmo" className="h-4 w-auto" />
+                    </RouterLink>
+                </div>
+
+                <nav className="hidden lg:flex items-center space-x-6">
+                    {allLinks
+                        .filter(link => link.showOnDesktop)
+                        .map((link) => (
+                            // 2. Usando <a> para links de âncora
+                            <a key={link.name} href={link.href} className="text-[#5B6270] text-base font-semibold hover:text-[#27527B] transition-colors">
+                                {link.name}
+                            </a>
+                    ))}
+                </nav>
+                
+                <div className="flex items-center h-full">
+                    <div className="hidden md:flex items-center space-x-3 mx-4">
+                        {socialLinks.map(social => (
+                             <a 
+                                key={social.name} 
+                                href={social.href} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className={`flex items-center justify-center w-10 h-10 ${social.bgColor} rounded-full p-2 transition-transform hover:scale-110`}
+                            >
+                                {social.svg}
+                            </a>
+                        ))}
+                    </div>
+
+                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="group flex items-center justify-center w-[60px] h-full bg-[#27527B] hover:bg-[#356491] rounded-r-[18px] lg:rounded-[20px] transition-all duration-300">
+                        <svg className="block group-hover:hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H22M2 8.66667H16M2 15.3333H18M2 22H14" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>
+                        <svg className="hidden group-hover:block" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H26M2 10H18.8M2 18H21.2M2 26H16.4" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>
+                    </button>
+                </div>
+            </header>
+
+            {isMenuOpen && (
+                <div className="absolute top-full right-4 mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-200 z-10">
+                    <div className="p-2">
+                        {allLinks
+                            .filter(link => link.showOnDesktop)
+                            .map(link => (
+                                // 3. Usando <a> aqui também
+                                <a 
+                                    key={link.name}
+                                    href={link.href} 
+                                    className="block lg:hidden px-4 py-2 text-base text-[#5B6270] font-semibold rounded-lg hover:bg-gray-100 hover:text-[#27527B]"
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    {link.name}
+                                </a>
+                            ))
+                        }
+
+                        {allLinks
+                            .filter(link => !link.showOnDesktop)
+                            .map(link => (
+                                <React.Fragment key={link.name}>
+                                    {link.isSeparator && <hr className="my-2 border-gray-200"/>}
+                                    {/* Para estes, podemos usar RouterLink se eles forem para páginas diferentes */}
+                                    <RouterLink
+                                        to={link.href} 
+                                        className="block px-4 py-2 text-base text-[#5B6270] font-semibold rounded-lg hover:bg-gray-100 hover:text-[#27527B]"
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        {link.name}
+                                    </RouterLink>
+                                </React.Fragment>
+                            ))
+                        }
+
+                        <hr className="my-2 border-gray-200 md:hidden" />
+                        {socialLinks.map(social => (
+                            <a
+                                key={social.name}
+                                href={social.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block md:hidden px-4 py-2 text-base text-[#5B6270] font-semibold rounded-lg hover:bg-gray-100 hover:text-[#27527B]"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                {social.name}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default Header;import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+import './assets/styles/main.css';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);/* src/assets/styles/main.css */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 16px; 
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;// src/pages/Home.jsx
+
+import HeroSection from '../components/sections/HeroSection.jsx';
+import ProjectsSection from '../components/sections/ProjectsSection.jsx';
+import ExperienceSection from '../components/sections/ExperienceSection.jsx';
+import EducationSection from '../components/sections/EducationSection.jsx';
+import AboutMeSection from '../components/sections/AboutMeSection.jsx';
+import TestimonialsSection from '../components/sections/TestimonialsSection.jsx';
+import ContactSection from '../components/sections/ContactSection.jsx';
+
+const Home = () => {
+  return (
+    <>
+      <HeroSection />
+      <ProjectsSection />
+      <ExperienceSection />
+      <EducationSection />
+      <AboutMeSection />
+      <TestimonialsSection />
+      <ContactSection />
+    </>
+  );
+};
+
+export default Home;// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}", // <-- Adicione esta linha
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}{
   "name": "portfolio",
   "private": true,
   "version": "0.0.0",
@@ -29,271 +616,3 @@
     "vite": "^7.1.2"
   }
 }
-// src/App.jsx
-
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
-import Home from './pages/Home';
-import ProjectDetail from './pages/ProjectDetail';
-
-// 1. IMPORTE SEU COMPONENTE HEADER AQUI
-import Header from './src/components/layout/Header'; 
-import Footer from './src/components/layout/Footer'; // (Vamos assumir que você criará este depois)
-
-import './assets/styles/main.css';
-
-// Componente de Layout que inclui Header e Footer
-const Layout = () => {
-  return (
-    <>
-      {/* 2. USE SEU COMPONENTE AQUI */}
-      <Header /> 
-      
-      <main>
-        <Outlet /> {/* O conteúdo da página atual será renderizado aqui */}
-      </main>
-
-      {/* <Footer />  // Você pode adicionar o Footer depois */}
-    </>
-  );
-};
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/projeto/:projectId",
-        element: <ProjectDetail />,
-      },
-    ],
-  },
-]);
-
-function App() {
-  return <RouterProvider router={router} />;
-}
-
-export default App;export default {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-}
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
-// tailwind.config.js
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}", // <-- Adicione esta linha
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import { defineConfig, globalIgnores } from 'eslint/config'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{js,jsx}'],
-    extends: [
-      js.configs.recommended,
-      reactHooks.configs['recommended-latest'],
-      reactRefresh.configs.vite,
-    ],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        ecmaFeatures: { jsx: true },
-        sourceType: 'module',
-      },
-    },
-    rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
-    },
-  },
-])
-// src/App.jsx
-
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
-
-// Componentes que criamos
-import Header from "./components/layout/Header.jsx";
-import Home from './pages/Home';
-// import ProjectDetail from './pages/ProjectDetail'; // Vamos adicionar depois
-
-// Nosso componente de Layout que renderiza o Header e o conteúdo da página
-const Layout = () => {
-  return (
-    <>
-      <Header />
-      <main>
-        {/* O <Outlet> é onde as páginas (Home, etc.) serão renderizadas */}
-        <Outlet />
-      </main>
-      {/* <Footer /> */}
-    </>
-  );
-};
-
-// Configuração das nossas rotas
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />, // O Layout é aplicado a todas as rotas
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-    ],
-  },
-]);
-
-// O componente App principal que apenas renderiza o nosso roteador
-function App() {
-  return <RouterProvider router={router} />;
-}
-
-export default App;/* src/assets/styles/main.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
-import './assets/styles/main.css';
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-);import React, { useState } from 'react';
-
-// Como estamos usando Tailwind CSS, certifique-se de que ele esteja configurado em seu projeto React.
-// A fonte 'Jost' também deve ser importada no seu arquivo CSS principal ou no index.html do projeto.
-
-const Header = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    const navLinks = [
-        { name: 'Projetos', href: '#' },
-        { name: 'Experiência', href: '#' },
-        { name: 'Educação', href: '#' },
-        { name: 'Sobre mim', href: '#' },
-        { name: 'Contato', href: '#' },
-    ];
-
-    const menuLinks = [
-        ...navLinks,
-        { name: 'IArts', href: '#' },
-        { name: 'Música', href: '#' },
-        { name: 'Me contate', href: '#' },
-    ];
-
-
-    return (
-        <div className="relative">
-            <header className="flex items-center justify-between w-full max-w-[1360px] mx-auto bg-white border border-[#E7E7E7] rounded-[20px] h-[60px] pl-5 shadow-sm">
-                
-                {/* Nome à esquerda */}
-                <div className="flex-shrink-0">
-                    <h1 className="text-[#27527B] text-xl font-bold tracking-wider">GUILHERME CARMO</h1>
-                </div>
-
-                {/* Navegação Central (Telas Grandes) */}
-                <nav className="hidden lg:flex items-center space-x-6">
-                    {navLinks.map((link) => (
-                        <a key={link.name} href={link.href} className="text-[#5B6270] text-base font-semibold hover:text-[#27527B] transition-colors">
-                            {link.name}
-                        </a>
-                    ))}
-                </nav>
-                
-                {/* Seção direita com ícones de redes sociais e menu */}
-                <div className="flex items-center h-full">
-                    {/* Contêiner dos ícones de redes sociais (some em telas médias) */}
-                    <div className="hidden md:flex items-center space-x-3 mx-4">
-                        <a href="#" className="flex items-center justify-center w-10 h-10 bg-[#1E1E1E] rounded-full p-2 transition-transform hover:scale-110">
-                            <svg width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w.org/2000/svg"><path d="M0.27597 16.7241C0.27597 14.9149 1.74269 13.4482 3.55195 13.4482H6.82792V16.7241C6.82792 18.5333 5.3612 20 3.55195 20C1.74269 20 0.27597 18.5333 0.27597 16.7241Z" fill="#24CB71"></path><path d="M6.82745 0V6.55175H10.2759C12.1803 6.55175 13.7242 5.08508 13.7242 3.27588C13.7242 1.46667 12.1803 0 10.2759 0H6.82745Z" fill="#FF7237"></path><path d="M10.2759 13.4483C12.1803 13.4483 13.7242 11.9045 13.7242 10C13.7242 8.0956 12.1803 6.55175 10.2759 6.55175C8.37135 6.55175 6.82745 8.0956 6.82745 10C6.82745 11.9045 8.37135 13.4483 10.2759 13.4483Z" fill="#00B6FF"></path><path d="M0.27597 3.27588C0.27597 5.08508 1.74269 6.55175 3.55195 6.55175H6.82745V0H3.55195C1.74269 0 0.27597 1.46667 0.27597 3.27588Z" fill="#FF3737"></path><path d="M0.27597 10C0.27597 11.9045 1.74269 13.4482 3.55195 13.4482H6.82792L6.82745 6.55175H3.55195C1.74269 6.55175 0.27597 8.09562 0.27597 10Z" fill="#874FFF"></path></svg>
-                        </a>
-                        <a href="#" className="flex items-center justify-center w-10 h-10 bg-[#0077B5] rounded-full p-2 transition-transform hover:scale-110">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.4375 0H1.5625C0.699219 0 0 0.699219 0 1.5625V18.4375C0 19.3008 0.699219 20 1.5625 20H18.4375C19.3008 20 20 19.3008 20 18.4375V1.5625C20 0.699219 19.3008 0 18.4375 0ZM7.20312 14.1836H5.25391V7.94531H7.20312V14.1836ZM6.17578 7.16406H6.16016C5.45312 7.16406 4.99609 6.6875 4.99609 6.08203C4.99609 5.46484 5.46875 5 6.1875 5C6.90625 5 7.34766 5.46484 7.36328 6.08203C7.36719 6.68359 6.91016 7.16406 6.17578 7.16406ZM15 14.1836H12.7891V10.957C12.7891 10.1133 12.4453 9.53516 11.6836 9.53516C11.1016 9.53516 10.7773 9.92578 10.6289 10.3008C10.5742 10.4336 10.582 10.6211 10.582 10.8125V14.1836H8.39062C8.39062 14.1836 8.41797 8.46484 8.39062 7.94531H10.582V8.92578C10.7109 8.49609 11.4102 7.88672 12.5273 7.88672C13.9141 7.88672 15 8.78516 15 10.7148V14.1836Z" fill="white"/></svg>
-                        </a>
-                         <a href="#" className="flex items-center justify-center w-10 h-10 bg-[#25D366] rounded-full p-2 transition-transform hover:scale-110">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.05 2.91002C16.1331 1.98413 15.0411 1.24999 13.8376 0.750386C12.634 0.250782 11.3431 -0.00429369 10.04 2.33776e-05C4.58005 2.33776e-05 0.130049 4.45002 0.130049 9.91002C0.130049 11.66 0.590049 13.36 1.45005 14.86L0.0500488 20L5.30005 18.62C6.75005 19.41 8.38005 19.83 10.04 19.83C15.5 19.83 19.9501 15.38 19.9501 9.92002C19.9501 7.27002 18.92 4.78002 17.05 2.91002ZM10.04 18.15C8.56005 18.15 7.11005 17.75 5.84005 17L5.54005 16.82L2.42005 17.64L3.25005 14.6L3.05005 14.29C2.2276 12.9771 1.79097 11.4593 1.79005 9.91002C1.79005 5.37002 5.49005 1.67002 10.03 1.67002C12.23 1.67002 14.3 2.53002 15.85 4.09002C16.6177 4.85389 17.226 5.76257 17.6397 6.76335C18.0534 7.76414 18.2642 8.83711 18.26 9.92002C18.28 14.46 14.58 18.15 10.04 18.15ZM14.56 11.99C14.31 11.87 13.09 11.27 12.87 11.18C12.64 11.1 12.48 11.06 12.31 11.3C12.14 11.55 11.67 12.11 11.53 12.27C11.39 12.44 11.24 12.46 10.99 12.33C10.74 12.21 9.94005 11.94 9.00005 11.1C8.26005 10.44 7.77005 9.63002 7.62005 9.38002C7.48005 9.13002 7.60005 9.00002 7.73005 8.87002C7.84005 8.76002 7.98005 8.58002 8.10005 8.44002C8.22005 8.30002 8.27005 8.19002 8.35005 8.03002C8.43005 7.86002 8.39005 7.72002 8.33005 7.60002C8.27005 7.48002 7.77005 6.26002 7.57005 5.76002C7.37005 5.28002 7.16005 5.34002 7.01005 5.33002H6.53005C6.36005 5.33002 6.10005 5.39002 5.87005 5.64002C5.65005 5.89002 5.01005 6.49002 5.01005 7.71002C5.01005 8.93002 5.90005 10.11 6.02005 10.27C6.14005 10.44 7.77005 12.94 10.25 14.01C10.84 14.27 11.3 14.42 11.66 14.53C12.25 14.72 12.79 14.69 13.22 14.63C13.7 14.56 14.69 14.03 14.89 13.45C15.1 12.87 15.1 12.38 15.03 12.27C14.96 12.16 14.81 12.11 14.56 11.99Z" fill="#FAFAFA"/></svg>
-                        </a>
-                        <a href="#" className="flex items-center justify-center w-10 h-10 bg-[#24292F] rounded-full p-2 transition-transform hover:scale-110">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M10.0083 0C4.47396 0 0 4.4661 0 9.99127C0 14.4078 2.86662 18.1464 6.84338 19.4695C7.34058 19.569 7.5227 19.2546 7.5227 18.9901C7.5227 18.7584 7.50631 17.9645 7.50631 17.1372C4.72225 17.7328 4.14249 15.9462 4.14249 15.9462C3.69508 14.7883 3.03215 14.4907 3.03215 14.4907C2.12092 13.8786 3.09852 13.8786 3.09852 13.8786C4.1093 13.9448 4.63969 14.9042 4.63969 14.9042C5.53432 16.4259 6.97592 15.9959 7.55588 15.7312C7.63865 15.0861 7.90394 14.6395 8.18563 14.3914C5.96514 14.1598 3.62891 13.2996 3.62891 9.46183C3.62891 8.37008 4.02634 7.47686 4.65608 6.78218C4.55672 6.5341 4.20866 5.50832 4.75564 4.1354C4.75564 4.1354 5.60069 3.87069 7.5061 5.16098C8.32188 4.94228 9.16317 4.83102 10.0083 4.83008C10.8533 4.83008 11.7148 4.946 12.5102 5.16098C14.4159 3.87069 15.2609 4.1354 15.2609 4.1354C15.8079 5.50832 15.4596 6.5341 15.3603 6.78218C16.0066 7.47686 16.3876 8.37008 16.3876 9.46183C16.3876 13.2996 14.0514 14.1431 11.8143 14.3914C12.179 14.7056 12.4936 15.3011 12.4936 16.244C12.4936 17.5838 12.4773 18.6592 12.4773 18.9898C12.4773 19.2546 12.6596 19.569 13.1566 19.4697C17.1333 18.1462 20 14.4078 20 9.99127C20.0163 4.4661 15.526 0 10.0083 0Z" fill="white"/></svg>
-                        </a>
-                    </div>
-
-                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="group flex items-center justify-center w-[60px] h-full bg-[#27527B] hover:bg-[#356491] rounded-r-[18px] lg:rounded-[20px] transition-all duration-300">
-                        <svg className="block group-hover:hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H22M2 8.66667H16M2 15.3333H18M2 22H14" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>
-                        <svg className="hidden group-hover:block" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H26M2 10H18.8M2 18H21.2M2 26H16.4" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>
-                    </button>
-                </div>
-            </header>
-
-            {/* Menu Dropdown (Telas Pequenas) */}
-            {isMenuOpen && (
-                <div className="absolute top-full right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-200 z-10">
-                    <div className="p-2">
-                        {menuLinks.map((link, index) => (
-                           <React.Fragment key={link.name}>
-                             <a href={link.href} className="block px-4 py-2 text-base text-[#5B6270] font-semibold rounded-lg hover:bg-gray-100 hover:text-[#27527B]">
-                                {link.name}
-                            </a>
-                            {link.name === 'Contato' && <hr className="my-2 border-gray-200"/>}
-                           </React.Fragment>
-                        ))}
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-};
-
-export default Header;// src/pages/Home.jsx
-
-import Home from "./pages/Home.jsx";
-
-const Home = () => {
-  return (
-    <div className="text-center p-10">
-      <h1 className="text-3xl font-bold">Minha Página Home</h1>
-      <p className="mt-4">O conteúdo do meu portfólio virá aqui!</p>
-    </div>
-  );
-};
-
-export default Home;import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react()],
-})
