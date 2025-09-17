@@ -31,16 +31,16 @@ const UfabcIcon = () => (
 // --- Exportando o Array de Dados ---
 export const educationData = [
   {
-    icon: <GoogleIcon />,
-    institution: 'Coursera',
-    course: 'Google UX Design',
-    date: 'set de 2025 - atualmente',
-  },
-  {
     icon: <FatecIcon />,
     institution: 'FATEC São Paulo',
     course: 'Análise e Desenvolvimento de Sistemas',
-    date: 'jan de 2025 - dez de 2024',
+    date: 'jan de 2025 - atualmente',
+  },
+  {
+    icon: <GoogleIcon />,
+    institution: 'Coursera',
+    course: 'Google UX Design',
+    date: 'set de 2025',
   },
   {
     icon: <UfabcIcon />,
@@ -49,9 +49,9 @@ export const educationData = [
     date: 'mai de 2017 - dez de 2024',
   },
   {
-    icon: <img src={eucapacitoLogo} alt="Logo Eu Capacito" className="w-full h-full object-contain p-1.5" />,
+    icon: <img src={eucapacitoLogo} alt="Logo Eu Capacito" className="w-full h-full object-contain p-2" />,
     institution: 'Eu Capacito',
     course: 'User Experiênce (UX)',
-    date: 'dez de 2024',
+    date: 'jul de 2024',
   },
 ];
